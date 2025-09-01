@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Contact = () => {
+  const { API_BASE_URL } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
-    message: ''
+    message: '',
+    inquiryType: 'General'
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', null
 
   const handleChange = (e) => {
     setFormData({
@@ -22,13 +27,38 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    alert('Thank you for your message! We\'ll get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    try {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: '', 
+          subject: '', 
+          message: '', 
+          inquiryType: 'General' 
+        });
+      } else {
+        const errorData = await response.json();
+        setSubmitStatus('error');
+        console.error('Contact submission failed:', errorData.message);
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      console.error('Contact submission error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -52,6 +82,15 @@ const Contact = () => {
       title: "Hours",
       details: "Tue-Sat: 10AM-6PM, Sun: 12PM-5PM"
     }
+  ];
+
+  const inquiryTypes = [
+    'General',
+    'Restoration Request',
+    'Portfolio Inquiry',
+    'Pricing',
+    'Partnership',
+    'Other'
   ];
 
   return (
@@ -115,11 +154,35 @@ const Contact = () => {
               <h2 className="text-3xl font-display font-bold text-secondary-900 mb-6">
                 Send Us a Message
               </h2>
+
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center"
+                >
+                  <CheckCircle className="h-5 w-5 mr-2" />
+                  Thank you for your message! We'll get back to you within 24-48 hours.
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-center"
+                >
+                  <AlertCircle className="h-5 w-5 mr-2" />
+                  Something went wrong. Please try again or contact us directly.
+                </motion.div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-secondary-700 mb-2">
-                      Name
+                      Name *
                     </label>
                     <input
                       type="text"
@@ -134,7 +197,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-2">
-                      Email
+                      Email *
                     </label>
                     <input
                       type="email"
@@ -148,10 +211,43 @@ const Contact = () => {
                     />
                   </div>
                 </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-secondary-700 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      placeholder="+1 (555) 123-4567"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="inquiryType" className="block text-sm font-medium text-secondary-700 mb-2">
+                      Inquiry Type
+                    </label>
+                    <select
+                      id="inquiryType"
+                      name="inquiryType"
+                      value={formData.inquiryType}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-secondary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    >
+                      {inquiryTypes.map(type => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
                 
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium text-secondary-700 mb-2">
-                    Subject
+                    Subject *
                   </label>
                   <input
                     type="text"
@@ -167,7 +263,7 @@ const Contact = () => {
                 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-2">
-                    Message
+                    Message *
                   </label>
                   <textarea
                     id="message"
@@ -211,19 +307,19 @@ const Contact = () => {
               className="space-y-8"
             >
               <div>
-                              <h3 className="text-2xl font-display font-bold text-secondary-900 mb-4">
-                Visit Our Studio
-              </h3>
-              <div className="bg-secondary-200 rounded-lg p-6 mb-6">
-                <p className="text-secondary-700 mb-4">
-                  Located in the heart of San Francisco's Tech District, our studio is equipped with state-of-the-art AI processing facilities and traditional restoration tools.
-                </p>
-                <div className="space-y-2 text-sm text-secondary-600">
-                  <p><strong>Parking:</strong> Street parking available, garage nearby</p>
-                  <p><strong>Public Transport:</strong> BART and Muni lines (1 block away)</p>
-                  <p><strong>Accessibility:</strong> Wheelchair accessible entrance</p>
+                <h3 className="text-2xl font-display font-bold text-secondary-900 mb-4">
+                  Visit Our Studio
+                </h3>
+                <div className="bg-secondary-200 rounded-lg p-6 mb-6">
+                  <p className="text-secondary-700 mb-4">
+                    Located in the heart of San Francisco's Tech District, our studio is equipped with state-of-the-art AI processing facilities and traditional restoration tools.
+                  </p>
+                  <div className="space-y-2 text-sm text-secondary-600">
+                    <p><strong>Parking:</strong> Street parking available, garage nearby</p>
+                    <p><strong>Public Transport:</strong> BART and Muni lines (1 block away)</p>
+                    <p><strong>Accessibility:</strong> Wheelchair accessible entrance</p>
+                  </div>
                 </div>
-              </div>
               </div>
 
               {/* Map Placeholder */}
