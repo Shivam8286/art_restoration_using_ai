@@ -9,11 +9,15 @@ This platform demonstrates how artificial intelligence can be used to restore da
 ## ✨ Features
 
 ### Core Functionality
-- **AI Restoration Services Showcase** - Three main service tiers with detailed descriptions
-- **Interactive Portfolio Gallery** - Before/after restoration comparisons with hover effects
-- **Responsive Design** - Mobile-first approach with modern UI/UX principles
-- **Smooth Animations** - Framer Motion powered transitions and micro-interactions
-- **Professional Layout** - Clean, art-focused design with elegant typography
+- **AI Restoration Services Showcase** – Detailed services with modern cards and icons
+- **Interactive Portfolio Gallery** – Before/after comparisons with hover effects
+- **Folk Art Focus** – Featured sections for Warli, Madhubani, Kalighat, Kangra, and Gond art (Home & Portfolio)
+- **Image Upload to Cloudinary + MongoDB** – Upload damaged artwork from Services page; image is stored on Cloudinary and a Restoration record is created in MongoDB
+- **User Auth & Profile** – JWT auth, modernized profile with editable fields and quick stats
+- **Dashboard** – Colorful stats, recent activity timeline, and drag-and-drop upload starter
+- **Responsive Design** – Mobile-first UX with enhanced animations
+- **Smooth Animations** – Framer Motion micro-interactions across pages
+- **Vibrant Theming** – Gradient backgrounds, glass cards, and fancy borders site-wide
 
 ### Service Offerings
 1. **Color Restoration** - AI-powered color correction and fade reversal
@@ -21,10 +25,10 @@ This platform demonstrates how artificial intelligence can be used to restore da
 3. **Complete Reconstruction** - Full digital reconstruction of severely damaged artworks
 
 ### Technical Features
-- **Modern React Architecture** - Built with React 18 and React Router v6
-- **Tailwind CSS Styling** - Custom color palette and component system
-- **Responsive Navigation** - Multi-page routing with consistent layout
-- **Performance Optimized** - Efficient rendering and smooth animations
+- **Modern React Architecture** – React 18 + React Router v6
+- **Tailwind CSS Styling** – Custom palette, gradients, glass effects, and utility components
+- **Responsive Navigation** – Updated translucent Navbar with backdrop blur
+- **Performance Optimized** – Efficient rendering and smooth animations
 
 ## 🛠️ Technology Stack
 
@@ -111,7 +115,7 @@ This platform demonstrates how artificial intelligence can be used to restore da
    ```
 
 6. **Open your browser**
-   - Frontend: `http://localhost:3000`
+   - Frontend: `http://localhost:5001` (update `FRONTEND_URL` if different)
    - Backend API: `http://localhost:5000/api`
 
 ### Available Scripts
@@ -135,7 +139,7 @@ Create a `.env` file in the root directory with the following variables:
 # Server Configuration
 NODE_ENV=development
 PORT=5000
-FRONTEND_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:5001
 
 # Database Configuration
 MONGODB_URI=mongodb://localhost:27017/ai-art-restoration
@@ -154,6 +158,9 @@ ADMIN_EMAIL=admin@yourdomain.com
 CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
+
+# Frontend
+REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 
@@ -192,9 +199,11 @@ REACT_APP_API_URL=http://localhost:5000/api
 │   │   ├── Artists.js
 │   │   ├── Contact.js
 │   │   ├── Gallery.js
-│   │   ├── Home.js
-│   │   ├── Portfolio.js
-│   │   └── Services.js
+│   │   ├── Home.js           # Featured folk art restorations, colorful sections
+│   │   ├── Portfolio.js      # Filterable folk art categories, colorful grid
+│   │   ├── Services.js       # Upload damaged artwork (Cloudinary + MongoDB)
+│   │   ├── Dashboard.js      # Stats, activity timeline, drag & drop upload
+│   │   └── Profile.js        # Editable profile, quick stats, modern UI
 │   ├── App.js
 │   ├── index.js
 │   └── index.css
@@ -291,6 +300,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 - `POST /api/restorations/:id/images` - Upload restoration images
 - `POST /api/restorations/:id/notes` - Add note to restoration
 - `PUT /api/restorations/:id/progress` - Update restoration progress
+ - `POST /api/restorations/upload` – Public endpoint used by Services page to upload a damaged artwork image. Uploads to Cloudinary and creates a Restoration in MongoDB. Fields: `image` (file), optional `title`, `description`, `technique`.
 
 ### Portfolio Management
 - `GET /api/portfolio` - Get all portfolio items (public)
