@@ -8,94 +8,77 @@ const Portfolio = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedPeriod, setSelectedPeriod] = useState('all');
 
-  const categories = ['all', 'renaissance', 'baroque', 'classical', 'romantic', 'modern'];
+  const categories = ['all', 'warli', 'madhubani', 'kalighat', 'kangra', 'gond'];
   const periods = [
-    { value: 'all', label: 'All Periods' },
-    { value: '1400-1600', label: 'Renaissance (1400-1600)' },
-    { value: '1600-1750', label: 'Baroque (1600-1750)' },
-    { value: '1750-1850', label: 'Classical (1750-1850)' },
-    { value: '1850-1900', label: 'Romantic (1850-1900)' },
-    { value: '1900+', label: 'Modern (1900+)' }
+    { value: 'all', label: 'All Styles' },
+    { value: 'warli', label: 'Warli' },
+    { value: 'madhubani', label: 'Madhubani' },
+    { value: 'kalighat', label: 'Kalighat' },
+    { value: 'kangra', label: 'Kangra' },
+    { value: 'gond', label: 'Gond' }
   ];
 
   const restorations = [
     {
       id: 1,
-      title: "Renaissance Portrait Restoration",
-      originalImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=300&fit=crop",
-      technique: "AI-Powered Color Restoration",
+      title: "Warli Art Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Warli_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Warli_painting.jpg",
+      technique: "Traditional Warli Techniques",
       duration: "2 weeks",
-      category: "renaissance",
-      period: "1500",
-      description: "Restored faded colors and repaired minor surface damage"
+      category: "warli",
+      period: "warli",
+      description: "Restored traditional Warli painting using natural pigments and digital enhancement."
     },
     {
       id: 2,
-      title: "Baroque Landscape Recovery",
-      originalImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
-      technique: "Damage Repair & Enhancement",
+      title: "Madhubani Art Revival",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Madhubani_art.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Madhubani_art.jpg",
+      technique: "Natural Dyes & AI Enhancement",
       duration: "3 weeks",
-      category: "baroque",
-      period: "1650",
-      description: "Major tear repair and color restoration"
+      category: "madhubani",
+      period: "madhubani",
+      description: "Revived faded Madhubani artwork with color correction and pattern restoration."
     },
     {
       id: 3,
-      title: "Classical Still Life Revival",
-      originalImage: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=300&fit=crop",
-      technique: "Complete Digital Reconstruction",
+      title: "Kalighat Painting Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kalighat_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kalighat_painting.jpg",
+      technique: "Digital & Manual Touch-up",
       duration: "4 weeks",
-      category: "classical",
-      period: "1800",
-      description: "Complete reconstruction of severely damaged artwork"
+      category: "kalighat",
+      period: "kalighat",
+      description: "Restored Kalighat painting with digital retouching and manual detailing."
     },
     {
       id: 4,
-      title: "Romantic Portrait Enhancement",
-      originalImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop",
-      technique: "Color Enhancement",
-      duration: "1 week",
-      category: "romantic",
-      period: "1850",
-      description: "Enhanced colors and improved contrast"
+      title: "Kangra Miniature Revival",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Kangra_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Kangra_painting.jpg",
+      technique: "Miniature Detailing",
+      duration: "3 weeks",
+      category: "kangra",
+      period: "kangra",
+      description: "Revived intricate Kangra miniature painting with fine brushwork."
     },
     {
       id: 5,
-      title: "Modern Abstract Restoration",
-      originalImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-      technique: "Surface Reconstruction",
+      title: "Gond Art Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gond_art.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gond_art.jpg",
+      technique: "Pattern & Color Restoration",
       duration: "2 weeks",
-      category: "modern",
-      period: "1950",
-      description: "Surface damage repair and texture restoration"
-    },
-    {
-      id: 6,
-      title: "Renaissance Fresco Recovery",
-      originalImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
-      technique: "Complete Reconstruction",
-      duration: "5 weeks",
-      category: "renaissance",
-      period: "1550",
-      description: "Complete digital reconstruction of damaged fresco"
+      category: "gond",
+      period: "gond",
+      description: "Restored vibrant colors and patterns in Gond art using digital and traditional methods."
     }
   ];
 
   const filteredRestorations = restorations.filter(restoration => {
     const categoryMatch = selectedCategory === 'all' || restoration.category === selectedCategory;
-    const periodMatch = selectedPeriod === 'all' || 
-      (selectedPeriod === '1400-1600' && restoration.period >= 1400 && restoration.period < 1600) ||
-      (selectedPeriod === '1600-1750' && restoration.period >= 1600 && restoration.period < 1750) ||
-      (selectedPeriod === '1750-1850' && restoration.period >= 1750 && restoration.period < 1850) ||
-      (selectedPeriod === '1850-1900' && restoration.period >= 1850 && restoration.period < 1900) ||
-      (selectedPeriod === '1900+' && restoration.period >= 1900);
-    
+    const periodMatch = selectedPeriod === 'all' || restoration.period === selectedPeriod;
     return categoryMatch && periodMatch;
   });
 

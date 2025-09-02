@@ -156,6 +156,28 @@ CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 ```
 
+
+1. Create a `.env` file in the root directory with the following content:
+
+```
+MONGODB_URI=mongodb://localhost:27017
+JWT_SECRET=your_jwt_secret
+EMAIL_USER=your_email@example.com
+EMAIL_PASS=your_email_password
+EMAIL_SERVICE=gmail
+FRONTEND_URL=http://localhost:3000
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+2. For the frontend, ensure you restart the React development server after editing `.env`.
+
+## Logging In
+
+- Start both backend and frontend servers.
+- Open the app in your browser.
+- Use the login form to enter your email and password (as registered or in the database).
+- The app will use the API URL from your `.env` file to authenticate.
+
 ## 📁 Project Structure
 
 ```

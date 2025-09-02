@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult, query } = require('express-validator');
 const Restoration = require('../models/Restoration');
 const { protect, authorize } = require('../middleware/auth');
-const { uploadPortfolio, processImage } = require('../middleware/upload');
+const { uploadPortfolio, processImage, uploadSingle } = require('../middleware/upload');
 const cloudinary = require('../config/cloudinary');
 
 const router = express.Router();
@@ -396,6 +396,52 @@ router.put('/:id/progress', protect, authorize('artist', 'admin'), [
     res.json({ message: 'Progress updated successfully', progress: restoration.progress });
   } catch (error) {
     console.error('Update progress error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// @desc    Upload damaged artwork and create restoration
+// @route   POST /api/restorations/upload
+// @access  Public
+router.post('/upload', uploadSingle, processImage, async (req, res) => {
+  try {
+    if (!req.processedFiles || req.processedFiles.length === 0) {
+      return res.status(400).json({ message: 'No image uploaded' });
+    }
+    const file = req.processedFiles[0];
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(file.processed.path, {
+      folder: 'uploads',
+      transformation: [
+        { width: 1200, height: 1200, crop: 'limit' },
+        { quality: 'auto:good' }
+      ]
+    });
+    // Clean up local file
+    const fs = require('fs');
+    if (fs.existsSync(file.processed.path)) {
+      fs.unlinkSync(file.processed.path);
+    }
+    // Create restoration document
+    const { title = 'Untitled Restoration', description = '', technique = 'Digital Enhancement' } = req.body;
+    const restoration = await Restoration.create({
+      title,
+      description,
+      technique,
+      originalImage: {
+        public_id: result.public_id,
+        url: result.secure_url
+      },
+      estimatedDuration: 2,
+      price: 0,
+      client: null // Optionally set if user is logged in
+    });
+    res.json({
+      message: 'Image uploaded and restoration created successfully',
+      restoration
+    });
+  } catch (error) {
+    console.error('Upload restoration error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });

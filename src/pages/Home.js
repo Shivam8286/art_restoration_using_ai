@@ -8,27 +8,43 @@ const Home = () => {
   const featuredRestorations = [
     {
       id: 1,
-      title: "Renaissance Portrait Restoration",
-      originalImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=300&fit=crop",
-      technique: "AI-Powered Color Restoration",
+      title: "Warli Art Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Warli_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Warli_painting.jpg",
+      technique: "Traditional Warli Techniques",
       duration: "2 weeks"
     },
     {
       id: 2,
-      title: "Classical Landscape Recovery",
-      originalImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop",
-      technique: "Damage Repair & Enhancement",
+      title: "Madhubani Art Revival",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Madhubani_art.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Madhubani_art.jpg",
+      technique: "Natural Dyes & AI Enhancement",
       duration: "3 weeks"
     },
     {
       id: 3,
-      title: "Baroque Masterpiece Revival",
-      originalImage: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
-      restoredImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=300&fit=crop",
-      technique: "Complete Digital Reconstruction",
+      title: "Kalighat Painting Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kalighat_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/2/2e/Kalighat_painting.jpg",
+      technique: "Digital & Manual Touch-up",
       duration: "4 weeks"
+    },
+    {
+      id: 4,
+      title: "Kangra Miniature Revival",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Kangra_painting.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Kangra_painting.jpg",
+      technique: "Miniature Detailing",
+      duration: "3 weeks"
+    },
+    {
+      id: 5,
+      title: "Gond Art Restoration",
+      originalImage: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gond_art.jpg",
+      restoredImage: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Gond_art.jpg",
+      technique: "Pattern & Color Restoration",
+      duration: "2 weeks"
     }
   ];
 
