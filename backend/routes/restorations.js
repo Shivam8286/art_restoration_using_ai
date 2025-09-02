@@ -424,6 +424,8 @@ router.post('/upload', uploadSingle, processImage, async (req, res) => {
     }
     // Create restoration document
     const { title = 'Untitled Restoration', description = '', technique = 'Digital Enhancement' } = req.body;
+
+    // Build minimal valid Restoration document
     const restoration = await Restoration.create({
       title,
       description,
@@ -434,7 +436,7 @@ router.post('/upload', uploadSingle, processImage, async (req, res) => {
       },
       estimatedDuration: 2,
       price: 0,
-      client: null // Optionally set if user is logged in
+      client: req.user ? req.user._id : (null)
     });
     res.json({
       message: 'Image uploaded and restoration created successfully',

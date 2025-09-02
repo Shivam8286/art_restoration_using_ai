@@ -4,6 +4,7 @@ import { Zap, Shield, Clock, Palette, Layers, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 const Services = () => {
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
   const services = [
     {
       icon: Palette,
@@ -28,7 +29,7 @@ const Services = () => {
     }
   ];
 
-  const process = [
+  const restorationProcess = [
     {
       step: "01",
       title: "Assessment",
@@ -78,7 +79,7 @@ const Services = () => {
       formData.append('image', file);
       formData.append('title', title);
       formData.append('description', description);
-      const res = await fetch('/api/restorations/upload', {
+      const res = await fetch(`${API_BASE_URL}/restorations/upload`, {
         method: 'POST',
         body: formData
       });
@@ -98,7 +99,7 @@ const Services = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50">
+    <div className="min-h-screen gradient-bg">
       {/* Header */}
       <section className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -237,7 +238,7 @@ const Services = () => {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {process.map((step, index) => (
+            {restorationProcess.map((step, index) => (
               <motion.div
                 key={step.step}
                 initial={{ opacity: 0, y: 20 }}

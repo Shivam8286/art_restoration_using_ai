@@ -28,13 +28,32 @@
   }
   
   .gradient-bg {
-    background: linear-gradient(135deg, #fef7ee 0%, #fdedd6 100%);
+    background: radial-gradient(1200px circle at 0% 0%, #fef7ee 10%, transparent 40%),
+                radial-gradient(1200px circle at 100% 0%, #fde6ff 10%, transparent 40%),
+                radial-gradient(1200px circle at 100% 100%, #e0f2fe 10%, transparent 40%),
+                linear-gradient(135deg, #fef7ee 0%, #fdedd6 100%);
   }
   
   .text-gradient {
-    background: linear-gradient(135deg, #ed7514 0%, #de5a0a 100%);
+    background: linear-gradient(135deg, #ed7514 0%, #d946ef 50%, #0ea5e9 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md rounded-2xl shadow-lg border border-white/40;
+  }
+
+  .fancy-border {
+    position: relative;
+  }
+  .fancy-border::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(237,117,20,0.6), rgba(217,70,239,0.6), rgba(14,165,233,0.6));
+    z-index: -1;
   }
 }

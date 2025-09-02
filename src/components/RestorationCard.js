@@ -8,7 +8,7 @@ const RestorationCard = ({ restoration }) => {
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className="card overflow-hidden group"
+      className="card fancy-border overflow-hidden group"
     >
       <div className="relative overflow-hidden">
         <div className="relative h-64">
@@ -16,6 +16,7 @@ const RestorationCard = ({ restoration }) => {
             src={showRestored ? restoration.restoredImage : restoration.originalImage}
             alt={restoration.title}
             className="w-full h-full object-cover transition-all duration-500"
+            onError={(e)=>{e.currentTarget.src='https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=800&auto=format&fit=crop&q=60';}}
           />
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300">
             <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

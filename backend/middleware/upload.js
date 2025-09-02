@@ -43,14 +43,19 @@ const upload = multer({
 
 // Image processing middleware
 const processImage = async (req, res, next) => {
-  if (!req.files || req.files.length === 0) {
+  // Normalize to an array for both single and multiple uploads
+  const incomingFiles = Array.isArray(req.files)
+    ? req.files
+    : (req.file ? [req.file] : []);
+
+  if (incomingFiles.length === 0) {
     return next();
   }
 
   try {
     const processedFiles = [];
 
-    for (const file of req.files) {
+    for (const file of incomingFiles) {
       const filePath = file.path;
       const fileName = file.filename;
       const outputPath = path.join(uploadsDir, 'processed-' + fileName);

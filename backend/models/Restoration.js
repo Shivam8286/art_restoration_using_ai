@@ -9,13 +9,11 @@ const restorationSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: [true, 'Description is required'],
     maxlength: [1000, 'Description cannot exceed 1000 characters']
   },
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
   },
   artist: {
     type: mongoose.Schema.Types.ObjectId,
@@ -49,7 +47,7 @@ const restorationSchema = new mongoose.Schema({
   },
   estimatedDuration: {
     type: Number, // in weeks
-    required: [true, 'Estimated duration is required'],
+    default: 2,
     min: [1, 'Duration must be at least 1 week']
   },
   actualDuration: {
@@ -57,7 +55,7 @@ const restorationSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: [true, 'Price is required'],
+    default: 0,
     min: [0, 'Price cannot be negative']
   },
   deposit: {
